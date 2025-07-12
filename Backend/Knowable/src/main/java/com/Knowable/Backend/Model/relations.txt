@@ -1,0 +1,18 @@
+User
+ ├── 1:N PdfDocument
+ ├── 1:N PreviousYearPaper
+ ├── 1:N QuestionSession
+ └── 1:N ExpectedQuestion
+
+PdfDocument
+ └── N:1 User
+ └── 1:N QuestionSession
+
+PreviousYearPaper
+ └── N:1 User
+ └── 1:N ExpectedQuestion
+
+ExpectedQuestion
+ └── N:1 User
+ └── Optional N:1 PdfDocument
+ └── Optional N:1 PreviousYearPaper

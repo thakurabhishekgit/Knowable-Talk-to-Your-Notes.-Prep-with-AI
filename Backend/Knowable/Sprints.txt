@@ -1,0 +1,44 @@
+Phase 1: Cloudinary Upload System
+
+
+Add Cloudinary dependency to Maven.
+
+Set up Cloudinary credentials in application-dev.properties.
+
+Create config class to initialize Cloudinary SDK.
+
+Build service class to handle file upload to Cloudinary.
+
+Create PDF model/entity to map uploaded files in DB.
+
+Create upload endpoint in a controller.
+
+
+
+----------------------------------------------
+
+
+
+Phase 2: PDF History + Management
+Create GET endpoint to fetch all uploaded PDFs.
+
+Add filters like “uploaded by me” or “recently uploaded”.
+
+Store optional tags or categories for each PDF.
+
+-----------------------------------------------
+AI-Based Interaction (Future Work)
+On upload, parse PDF with Apache Tika or PDFBox.
+
+Store extracted text in DB or embedding store.
+
+Use LLM API (OpenAI / Gemini / Ollama) to power:
+
+Chat with PDF
+
+Generate expected questions from previous year papers
+
+
+
+
+--------------------------------------------
