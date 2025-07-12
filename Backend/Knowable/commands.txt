@@ -1,0 +1,5 @@
+# Development profile
+mvn spring-boot:run -Dspring-boot.run.profiles=dev
+
+# Production profile
+mvn spring-boot:run -Dspring-boot.run.profiles=prod
