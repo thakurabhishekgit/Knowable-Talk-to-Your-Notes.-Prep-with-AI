@@ -13,7 +13,9 @@ public class SecurityConfig {
         http
                 .csrf().disable() // Disable CSRF for simplicity (use with caution in production)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/upload/**").permitAll() // ✅ Allow upload endpoint
+                        .requestMatchers("/api/upload/**",
+                                "/api/documents/**")
+                        .permitAll() // ✅ Allow upload endpoint
                         .anyRequest().authenticated() // Require auth for other routes
                 )
                 .httpBasic(); // Or use .formLogin() or JWT setup based on your use case
