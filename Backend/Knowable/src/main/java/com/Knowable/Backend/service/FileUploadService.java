@@ -18,7 +18,7 @@ public class FileUploadService {
     public String uploadFile(MultipartFile file) throws IOException {
         Map<?, ?> result = cloudinary.uploader().upload(file.getBytes(),
                 ObjectUtils.asMap(
-                        "resource_type", "auto", // handles pdf, ppt, docx
+                        "resource_type", "raw", // handles pdf, ppt, docx
                         "folder", "knowable_docs" // optional: Cloudinary folder
                 ));
 
