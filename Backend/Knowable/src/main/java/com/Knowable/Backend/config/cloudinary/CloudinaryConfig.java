@@ -1,9 +1,8 @@
-package com.Knowable.Backend;
+package com.Knowable.Backend.config.cloudinary;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.Knowable.Backend.config.cloudinary.CloudinaryProperties;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
