@@ -6,6 +6,8 @@ import com.Knowable.Backend.dto.QuestionSessionDTO;
 import com.Knowable.Backend.repository.DocumentRepository;
 import com.Knowable.Backend.repository.QuestionSessionRepository;
 import com.Knowable.Backend.service.QuestionSessionService;
+import org.springframework.transaction.annotation.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -39,6 +41,7 @@ public class QuestionSessionServiceImpl implements QuestionSessionService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<QuestionSession> getQuestionsForDocument(Long documentId) {
         return questionSessionRepository.findByDocumentId(documentId);
     }
