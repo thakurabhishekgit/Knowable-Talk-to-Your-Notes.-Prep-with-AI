@@ -16,8 +16,12 @@ public class CloudinaryService {
     private final Cloudinary cloudinary;
 
     public String uploadProfileImage(MultipartFile file) throws IOException {
-        Map uploadResult = cloudinary.uploader().upload(file.getBytes(),
-                ObjectUtils.asMap("folder", "knowable/profile_pictures"));
-        return uploadResult.get("secure_url").toString();
+        Map<?, ?> result = cloudinary.uploader().upload(file.getBytes(),
+                ObjectUtils.asMap(
+                        "resource_type", "raw", // handles pdf, ppt, docx
+                        "folder", "knowable_docs" // optional: Cloudinary folder
+                ));
+
+        return result.get("secure_url").toString(); // Return the Cloudinary URL
     }
 }

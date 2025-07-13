@@ -3,10 +3,12 @@ package com.Knowable.Backend.Controller;
 import com.Knowable.Backend.dto.UserDTO;
 import com.Knowable.Backend.service.UserService;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.MediaType;
 
 import jakarta.validation.Valid;
 import java.util.List;
@@ -28,13 +30,13 @@ public class UserController {
     }
 
     // ✅ Upload profile picture separately
-    @PostMapping("/uploadProfilePicture/{id}")
-    public ResponseEntity<String> uploadProfilePicture(
+    @PostMapping(value = "/uploadProfilePicture/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<UserDTO> uploadProfilePicture(
             @PathVariable Long id,
-            @RequestParam("profilePicture") MultipartFile profilePicture) {
+            @RequestPart("profilePicture") MultipartFile profilePicture) {
 
-        userService.updateProfilePicture(id, profilePicture);
-        return ResponseEntity.ok("Profile picture uploaded successfully.");
+        UserDTO updatedUser = userService.updateProfilePicture(id, profilePicture);
+        return ResponseEntity.ok(updatedUser);
     }
 
     // ✅ Update user (without handling profile picture)

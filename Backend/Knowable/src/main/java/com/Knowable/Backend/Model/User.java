@@ -18,6 +18,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
     @NotBlank(message = "Username is required")
@@ -25,7 +26,7 @@ public class User {
     private String username;
 
     @NotBlank(message = "Password is required")
-    @Size(min = 5, max = 20, message = "Password must be between 5 to 20 characters")
+
     private String password;
 
     @Email
@@ -41,6 +42,5 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Workspace> workspaces;
-
 
 }

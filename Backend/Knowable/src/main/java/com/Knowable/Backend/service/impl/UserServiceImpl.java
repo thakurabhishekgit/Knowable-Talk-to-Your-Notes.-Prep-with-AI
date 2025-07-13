@@ -61,11 +61,11 @@ public class UserServiceImpl implements UserService {
             user.setProfilePictureUrl(imageUrl);
             user.setUpdatedAt(LocalDateTime.now());
             userRepository.save(user);
-
         } catch (IOException e) {
             throw new RuntimeException("Failed to upload new profile picture", e);
         }
-        return updateProfilePicture(id, profilePicture);
+
+        return convertToDTO(user); // ✅ Correct return
     }
 
     @Override

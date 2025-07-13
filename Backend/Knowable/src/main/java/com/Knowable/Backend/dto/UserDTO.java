@@ -21,10 +21,10 @@ public class UserDTO {
     private String username;
 
     @NotBlank(message = "Password is required")
-    @Size(min = 5, max = 20, message = "Password must be between 5 to 20 characters")
+
     private String password;
- 
-    @Email 
+
+    @Email
     private String email;
 
     private MultipartFile profilePicture; // For input (upload)
@@ -37,6 +37,5 @@ public class UserDTO {
     private LocalDateTime updatedAt;
 
     private List<Long> workspaceIds;
-
 
 }
