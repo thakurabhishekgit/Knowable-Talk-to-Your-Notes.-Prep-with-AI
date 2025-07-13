@@ -5,48 +5,45 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.Map;
+
 @Component
 public class GeminiClient {
-
-    private final WebClient webClient;
 
     @Value("${gemini.api.key}")
     private String apiKey;
 
-    public GeminiClient() {
-        this.webClient = WebClient.builder()
+    private final WebClient webClient;
+
+    public GeminiClient(WebClient.Builder webClientBuilder) {
+        this.webClient = webClientBuilder
                 .baseUrl("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent")
                 .build();
     }
 
-    public String summarizeText(String inputText) {
-        String requestBody = """
-                {
-                    "contents": [{
-                        "parts": [{
-                            "text": "%s"
-                        }]
-                    }]
-                }
-                """.formatted(inputText.replace("\"", "\\\""));
+    public String summarize(String text) {
+        Map<String, Object> requestBody = Map.of(
+                "contents", new Object[] {
+                        Map.of("parts", new Object[] {
+                                Map.of("text", text)
+                        })
+                });
 
         return webClient.post()
                 .uri(uriBuilder -> uriBuilder.queryParam("key", apiKey).build())
-                .header("Content-Type", "application/json")
-                .body(Mono.just(requestBody), String.class)
+                .bodyValue(requestBody)
                 .retrieve()
-                .bodyToMono(String.class)
+                .bodyToMono(Map.class)
                 .map(response -> {
-                    // Extract the summary from JSON (simple parsing)
-                    int index = response.indexOf("text");
-                    if (index != -1) {
-                        int start = response.indexOf(":", index) + 2;
-                        int end = response.indexOf("\"", start);
-                        return response.substring(start, end);
+                    var candidates = (java.util.List<?>) response.get("candidates");
+                    if (candidates != null && !candidates.isEmpty()) {
+                        var content = (Map<?, ?>) ((Map<?, ?>) candidates.get(0)).get("content");
+                        var parts = (java.util.List<?>) content.get("parts");
+                        return (String) ((Map<?, ?>) parts.get(0)).get("text");
                     }
-                    return "Failed to parse summary";
+                    return "No summary generated.";
                 })
-                .onErrorReturn("Failed to summarize text")
+                .onErrorReturn("Error summarizing with Gemini")
                 .block();
     }
 }

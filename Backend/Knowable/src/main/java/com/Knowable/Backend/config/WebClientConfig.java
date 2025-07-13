@@ -1,4 +1,4 @@
-package com.Knowable.Backend.client;
+package com.Knowable.Backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
