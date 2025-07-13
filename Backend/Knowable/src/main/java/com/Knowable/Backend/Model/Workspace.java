@@ -35,6 +35,11 @@ public class Workspace {
     @NotNull
     private String name;
 
+    @NotBlank(message = "description is required")
+    @Size(min = 5, max = 100, message = "description must be between 5 to 100")
+    @NotNull
+    private String description;
+
     private LocalDateTime createdAt;
 
     @ManyToOne
