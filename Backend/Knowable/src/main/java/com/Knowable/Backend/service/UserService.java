@@ -1,8 +1,19 @@
 package com.Knowable.Backend.service;
 
-import org.springframework.stereotype.Service;
+import com.Knowable.Backend.dto.UserDTO;
 
-@Service
-public class UserService {
+import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
+public interface UserService {
+    UserDTO createUser(UserDTO userDTO, MultipartFile profilePicture);
+
+    UserDTO getUserById(Long id);
+
+    List<UserDTO> getAllUsers();
+
+    UserDTO updateUser(Long id, UserDTO userDTO);
+
+    void deleteUser(Long id);
 }

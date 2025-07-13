@@ -40,6 +40,8 @@ public class User {
     @Email
     private String Email;
 
+    private String profilePictureUrl;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
