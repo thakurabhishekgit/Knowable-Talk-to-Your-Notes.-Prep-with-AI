@@ -1,10 +1,10 @@
 package com.Knowable.Backend.repository;
 
+import com.Knowable.Backend.Model.QuestionSession;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.Knowable.Backend.Model.QuestionSession;
+import java.util.List;
 
 public interface QuestionSessionRepository extends JpaRepository<QuestionSession, Long> {
-    // Additional query methods can be defined here if needed
-
+    List<QuestionSession> findByDocumentId(Long documentId);
 }

@@ -17,6 +17,7 @@ public class PdfExtractionService {
 
     private final Tika tika = new Tika();
 
+    @SuppressWarnings("deprecation")
     public String extractTextFromCloudinary(String fileUrl) {
         File tempFile = null;
 

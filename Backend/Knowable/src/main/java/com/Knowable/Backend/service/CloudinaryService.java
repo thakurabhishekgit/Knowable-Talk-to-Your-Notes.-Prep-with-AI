@@ -25,6 +25,7 @@ public class CloudinaryService {
         return result.get("secure_url").toString(); // Return the Cloudinary URL
     }
 
+    @SuppressWarnings("unchecked")
     public String uploadFile(MultipartFile file) throws IOException {
         Map<String, Object> uploadResult = cloudinary.uploader().upload(
                 file.getBytes(),
