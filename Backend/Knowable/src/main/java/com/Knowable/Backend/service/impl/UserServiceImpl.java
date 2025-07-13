@@ -5,7 +5,7 @@ import com.Knowable.Backend.dto.UserDTO;
 import com.Knowable.Backend.repository.UserRepository;
 import com.Knowable.Backend.service.CloudinaryService;
 import com.Knowable.Backend.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,19 +32,40 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO createUser(UserDTO userDTO, MultipartFile profilePicture) {
+        String imageUrl = null;
+
+        if (profilePicture != null && !profilePicture.isEmpty()) {
+            try {
+                imageUrl = cloudinaryService.uploadProfileImage(profilePicture);
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to upload profile picture", e);
+            }
+        }
+
+        User user = convertToEntity(userDTO);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setProfilePictureUrl(imageUrl);
+        user.setCreatedAt(LocalDateTime.now());
+        user.setUpdatedAt(LocalDateTime.now());
+
+        return convertToDTO(userRepository.save(user));
+    }
+
+    @Override
+    public UserDTO updateProfilePicture(Long id, MultipartFile profilePicture) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
         try {
             String imageUrl = cloudinaryService.uploadProfileImage(profilePicture);
-
-            User user = convertToEntity(userDTO);
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setProfilePictureUrl(imageUrl);
-            user.setCreatedAt(LocalDateTime.now());
             user.setUpdatedAt(LocalDateTime.now());
+            userRepository.save(user);
 
-            return convertToDTO(userRepository.save(user));
         } catch (IOException e) {
-            throw new RuntimeException("Profile picture upload failed: " + e.getMessage(), e);
+            throw new RuntimeException("Failed to upload new profile picture", e);
         }
+        return updateProfilePicture(id, profilePicture);
     }
 
     @Override
@@ -56,15 +77,6 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userDTO.getEmail());
         user.setUniversityName(userDTO.getUniversityName());
         user.setUpdatedAt(LocalDateTime.now());
-
-        if (userDTO.getProfilePicture() != null && !userDTO.getProfilePicture().isEmpty()) {
-            try {
-                String newUrl = cloudinaryService.uploadProfileImage(userDTO.getProfilePicture());
-                user.setProfilePictureUrl(newUrl);
-            } catch (IOException e) {
-                throw new RuntimeException("Profile picture update failed", e);
-            }
-        }
 
         return convertToDTO(userRepository.save(user));
     }

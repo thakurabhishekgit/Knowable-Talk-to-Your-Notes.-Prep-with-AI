@@ -15,50 +15,51 @@ import java.util.List;
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 @Validated
+
 public class UserController {
 
     private final UserService userService;
 
-    // ✅ Register new user
-    @PostMapping(value = "/registerUser", consumes = { "multipart/form-data" })
-    public ResponseEntity<UserDTO> registerUser(
-            @Valid @RequestPart("user") UserDTO userDTO,
-            @RequestPart("profilePicture") MultipartFile profilePicture) {
-
-        UserDTO createdUser = userService.createUser(userDTO, profilePicture);
+    // ✅ Register user (JSON only)
+    @PostMapping("/registerUser")
+    public ResponseEntity<UserDTO> registerUser(@Valid @RequestBody UserDTO userDTO) {
+        UserDTO createdUser = userService.createUser(userDTO, null); // No image here
         return ResponseEntity.ok(createdUser);
     }
 
-    // ✅ Update user by ID
-    @PutMapping(value = "/updateUser/{id}", consumes = { "multipart/form-data" })
+    // ✅ Upload profile picture separately
+    @PostMapping("/uploadProfilePicture/{id}")
+    public ResponseEntity<String> uploadProfilePicture(
+            @PathVariable Long id,
+            @RequestParam("profilePicture") MultipartFile profilePicture) {
+
+        userService.updateProfilePicture(id, profilePicture);
+        return ResponseEntity.ok("Profile picture uploaded successfully.");
+    }
+
+    // ✅ Update user (without handling profile picture)
+    @PutMapping("/updateUser/{id}")
     public ResponseEntity<UserDTO> updateUser(
             @PathVariable Long id,
-            @Valid @RequestPart("user") UserDTO userDTO,
-            @RequestPart(value = "profilePicture", required = false) MultipartFile profilePicture) {
-
-        if (profilePicture != null && !profilePicture.isEmpty()) {
-            userDTO.setProfilePicture(profilePicture);
-        }
+            @Valid @RequestBody UserDTO userDTO) {
 
         UserDTO updatedUser = userService.updateUser(id, userDTO);
         return ResponseEntity.ok(updatedUser);
     }
 
-    // ✅ Get single user by ID
+    // ✅ Get user by ID
     @GetMapping("/getUser/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
-        UserDTO user = userService.getUserById(id);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(userService.getUserById(id));
     }
 
     // ✅ Get all users
     @GetMapping("/getAllUsers")
     public ResponseEntity<List<UserDTO>> getAllUsers() {
-        List<UserDTO> users = userService.getAllUsers();
-        return ResponseEntity.ok(users);
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    // ✅ Delete user by ID
+    // ✅ Delete user
     @DeleteMapping("/deleteUser/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);

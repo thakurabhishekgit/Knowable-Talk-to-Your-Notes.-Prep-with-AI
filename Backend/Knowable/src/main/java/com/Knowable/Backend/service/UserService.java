@@ -9,6 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 public interface UserService {
     UserDTO createUser(UserDTO userDTO, MultipartFile profilePicture);
 
+    UserDTO updateProfilePicture(Long id, MultipartFile profilePicture);
+
     UserDTO getUserById(Long id);
 
     List<UserDTO> getAllUsers();
