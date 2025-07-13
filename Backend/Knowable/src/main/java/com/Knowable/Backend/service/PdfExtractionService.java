@@ -13,6 +13,7 @@ public class PdfExtractionService {
 
     private final Tika tika = new Tika();
 
+    @SuppressWarnings("deprecation")
     public String extractTextFromCloudinary(String fileUrl) throws TikaException, IOException {
         try (InputStream inputStream = new URL(fileUrl).openStream()) {
             return tika.parseToString(inputStream);
