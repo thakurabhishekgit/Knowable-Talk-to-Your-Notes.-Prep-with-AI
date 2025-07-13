@@ -50,9 +50,10 @@ public class DocumentServiceImpl implements DocumentService {
             fileType = tika.detect(dto.getFile().getInputStream());
 
             // Extract text from uploaded URL
+            System.out.println(fileUrl);
             extractedText = pdfExtractionService.extractTextFromCloudinary(fileUrl);
 
-        } catch (IOException | TikaException e) {
+        } catch (IOException e) {
             throw new RuntimeException("Error while processing document", e);
         }
 
