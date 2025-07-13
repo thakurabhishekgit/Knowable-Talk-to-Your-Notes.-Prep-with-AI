@@ -37,6 +37,6 @@ public class UserDTO {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    private List<Long> workspaceIds;
+    private List<WorkspaceDTO> workspaces; // Replace workspaceIds
 
 }

@@ -1,10 +1,12 @@
 package com.Knowable.Backend.service.impl;
 
 import com.Knowable.Backend.Model.User;
+import com.Knowable.Backend.Model.Workspace;
 import com.Knowable.Backend.dto.UserDTO;
+import com.Knowable.Backend.dto.WorkspaceDTO;
 import com.Knowable.Backend.repository.UserRepository;
 import com.Knowable.Backend.service.CloudinaryService;
-import com.Knowable.Backend.service.FileUploadService;
+
 import com.Knowable.Backend.service.UserService;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -118,7 +120,19 @@ public class UserServiceImpl implements UserService {
         dto.setProfilePictureUrl(user.getProfilePictureUrl());
         dto.setCreatedAt(user.getCreatedAt());
         dto.setUpdatedAt(user.getUpdatedAt());
-        dto.setPassword(user.getPassword()); // ✅ Add this line
+
+        if (user.getWorkspaces() != null) {
+            List<WorkspaceDTO> workspaceDTOs = user.getWorkspaces().stream().map(ws -> {
+                WorkspaceDTO w = new WorkspaceDTO();
+                w.setId(ws.getId());
+                w.setName(ws.getName());
+                w.setDescription(ws.getDescription());
+                w.setCreatedAt(ws.getCreatedAt());
+                return w;
+            }).collect(Collectors.toList());
+            dto.setWorkspaces(workspaceDTOs);
+        }
+
         return dto;
     }
 

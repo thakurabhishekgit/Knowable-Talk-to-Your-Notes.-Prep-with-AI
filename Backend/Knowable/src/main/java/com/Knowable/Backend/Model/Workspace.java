@@ -48,4 +48,5 @@ public class Workspace {
 
     @OneToMany(mappedBy = "workspace", cascade = CascadeType.ALL)
     private List<Document> documents;
+
 }
