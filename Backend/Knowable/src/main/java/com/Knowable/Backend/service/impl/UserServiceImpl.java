@@ -1,7 +1,7 @@
 package com.Knowable.Backend.service.impl;
 
 import com.Knowable.Backend.Model.User;
-import com.Knowable.Backend.Model.Workspace;
+
 import com.Knowable.Backend.dto.UserDTO;
 import com.Knowable.Backend.dto.WorkspaceDTO;
 import com.Knowable.Backend.repository.UserRepository;
