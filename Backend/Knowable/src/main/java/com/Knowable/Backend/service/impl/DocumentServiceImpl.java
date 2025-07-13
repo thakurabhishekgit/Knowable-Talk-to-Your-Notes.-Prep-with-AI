@@ -9,7 +9,7 @@ import com.Knowable.Backend.service.CloudinaryService;
 import com.Knowable.Backend.service.DocumentService;
 import com.Knowable.Backend.service.PdfExtractionService;
 import org.apache.tika.Tika;
-import org.apache.tika.exception.TikaException;
+
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -76,4 +76,20 @@ public class DocumentServiceImpl implements DocumentService {
         }
         documentRepository.deleteById(documentId);
     }
+
+    @Override
+    public Document getDocumentByWorkspace(Long workspaceId, Long documentId) {
+        Workspace workspace = workspaceRepository.findById(workspaceId)
+                .orElseThrow(() -> new RuntimeException("Workspace not found"));
+
+        Document document = documentRepository.findById(documentId)
+                .orElseThrow(() -> new RuntimeException("Document not found"));
+
+        if (!document.getWorkspace().getId().equals(workspace.getId())) {
+            throw new RuntimeException("Document does not belong to this workspace");
+        }
+
+        return document;
+    }
+
 }

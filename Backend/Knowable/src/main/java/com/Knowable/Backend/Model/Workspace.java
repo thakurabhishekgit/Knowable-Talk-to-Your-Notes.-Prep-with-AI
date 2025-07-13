@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.drew.lang.annotations.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -44,9 +45,11 @@ public class Workspace {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     @OneToMany(mappedBy = "workspace", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Document> documents;
 
 }

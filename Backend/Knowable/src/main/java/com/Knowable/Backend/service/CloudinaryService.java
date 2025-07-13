@@ -26,12 +26,13 @@ public class CloudinaryService {
     }
 
     public String uploadFile(MultipartFile file) throws IOException {
-        Map<?, ?> result = cloudinary.uploader().upload(file.getBytes(),
+        Map<String, Object> uploadResult = cloudinary.uploader().upload(
+                file.getBytes(),
                 ObjectUtils.asMap(
-                        "resource_type", "auto", // auto detects file type
-                        "folder", "knowable_docs" // optional: Cloudinary folder
-                ));
+                        "resource_type", "auto",
+                        "folder", "knowable_docs",
+                        "type", "upload"));
 
-        return result.get("secure_url").toString(); // Return the Cloudinary URL
+        return uploadResult.get("secure_url").toString(); // Return the Cloudinary URL
     }
 }

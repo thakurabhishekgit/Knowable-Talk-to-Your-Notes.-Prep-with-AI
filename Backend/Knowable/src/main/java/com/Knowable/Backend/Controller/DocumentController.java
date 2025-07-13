@@ -36,4 +36,14 @@ public class DocumentController {
         documentService.deleteDocument(documentId);
         return ResponseEntity.ok("Document deleted successfully");
     }
+
+    @GetMapping("/workspace/{workspaceId}/document/{documentId}")
+    public ResponseEntity<Document> getDocument(
+            @PathVariable Long workspaceId,
+            @PathVariable Long documentId) {
+
+        Document document = documentService.getDocumentByWorkspace(workspaceId, documentId);
+        return ResponseEntity.ok(document);
+    }
+
 }
