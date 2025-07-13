@@ -10,6 +10,8 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.Knowable.Backend.Model.Workspace;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

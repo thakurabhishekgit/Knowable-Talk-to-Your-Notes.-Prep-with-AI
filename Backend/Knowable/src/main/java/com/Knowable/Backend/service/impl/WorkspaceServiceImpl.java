@@ -7,6 +7,7 @@ import com.Knowable.Backend.repository.UserRepository;
 import com.Knowable.Backend.repository.WorkspaceRepository;
 import com.Knowable.Backend.service.WorkspaceService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -50,6 +51,7 @@ public class WorkspaceServiceImpl implements WorkspaceService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Workspace> getWorkspacesByUser(Long userId) {
         return workspaceRepository.findAllByUserId(userId);
     }

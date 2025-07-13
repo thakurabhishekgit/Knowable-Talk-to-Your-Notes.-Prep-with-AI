@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -25,6 +27,7 @@ public class PreviousYearPaper {
     private LocalDateTime uploadedAt;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "document_id")
     private Document document;
 }

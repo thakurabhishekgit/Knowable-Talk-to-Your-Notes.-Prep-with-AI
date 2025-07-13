@@ -9,4 +9,6 @@ public interface DocumentService {
     Document getDocumentByWorkspace(Long workspaceId, Long documentId);
 
     void deleteDocument(Long documentId);
+
+    Iterable<Document> getAllDocumentsByWorkspace(Long workspaceId);
 }

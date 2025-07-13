@@ -11,6 +11,7 @@ import com.Knowable.Backend.service.PdfExtractionService;
 import org.apache.tika.Tika;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -90,6 +91,15 @@ public class DocumentServiceImpl implements DocumentService {
         }
 
         return document;
+    }
+
+    @Override
+    @Transactional
+    public Iterable<Document> getAllDocumentsByWorkspace(Long workspaceId) {
+        Workspace workspace = workspaceRepository.findById(workspaceId)
+                .orElseThrow(() -> new RuntimeException("Workspace not found"));
+
+        return documentRepository.findByWorkspace(workspace);
     }
 
 }

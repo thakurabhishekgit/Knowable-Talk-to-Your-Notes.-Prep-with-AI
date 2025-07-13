@@ -3,6 +3,9 @@ package com.Knowable.Backend.Controller;
 import com.Knowable.Backend.Model.Document;
 import com.Knowable.Backend.dto.DocumentDTO;
 import com.Knowable.Backend.service.DocumentService;
+
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,6 +47,12 @@ public class DocumentController {
 
         Document document = documentService.getDocumentByWorkspace(workspaceId, documentId);
         return ResponseEntity.ok(document);
+    }
+
+    @GetMapping("/workspace/{workspaceId}/documents")
+    public ResponseEntity<List<Document>> getDocumentsByWorkspace(@PathVariable Long workspaceId) {
+        List<Document> documents = (List<Document>) documentService.getAllDocumentsByWorkspace(workspaceId);
+        return ResponseEntity.ok(documents);
     }
 
 }
