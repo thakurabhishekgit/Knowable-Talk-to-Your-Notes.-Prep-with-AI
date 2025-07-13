@@ -128,4 +128,13 @@ public class UserServiceImpl implements UserService {
         user.setUpdatedAt(dto.getUpdatedAt());
         return user;
     }
+
+    @Override
+    public UserDTO LoginUser(UserDTO userDTO) {
+        User user = userRepository.findByEmail(userDTO.getEmail()); // ✅ Correct null check
+        if (user == null || !passwordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
+            throw new RuntimeException("Invalid email or password " + userDTO.getEmail() + " " + userDTO.getPassword());
+        }
+        return convertToDTO(user);
+    }
 }
