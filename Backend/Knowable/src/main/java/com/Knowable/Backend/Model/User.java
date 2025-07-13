@@ -46,7 +46,7 @@ public class User {
     private LocalDateTime updatedAt;
 
     @NotBlank(message = "University name is required")
-    private String UniveristyName;
+    private String UniversityName;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Workspace> workspaces;

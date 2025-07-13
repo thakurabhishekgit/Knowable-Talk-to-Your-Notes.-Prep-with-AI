@@ -31,10 +31,10 @@ public class UserDTO {
     @Email
     private String email;
 
-    private MultipartFile profilePictureUrl;
+    private String profilePictureUrl;
 
     @NotBlank(message = "University name is required")
-    private String univeristyName;
+    private String UniversityName;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
