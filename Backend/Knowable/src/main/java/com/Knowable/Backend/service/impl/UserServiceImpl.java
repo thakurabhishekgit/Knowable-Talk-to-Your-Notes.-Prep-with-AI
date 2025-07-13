@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,7 +22,6 @@ public class UserServiceImpl implements UserService {
     private final CloudinaryService cloudinaryService;
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
     public UserServiceImpl(UserRepository userRepository,
             CloudinaryService cloudinaryService,
             PasswordEncoder passwordEncoder) {
@@ -36,18 +34,46 @@ public class UserServiceImpl implements UserService {
     public UserDTO createUser(UserDTO userDTO, MultipartFile profilePicture) {
         try {
             String imageUrl = cloudinaryService.uploadProfileImage(profilePicture);
-            User user = convertToEntity(userDTO, imageUrl);
+
+            User user = convertToEntity(userDTO);
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setProfilePictureUrl(imageUrl);
+            user.setCreatedAt(LocalDateTime.now());
+            user.setUpdatedAt(LocalDateTime.now());
+
             return convertToDTO(userRepository.save(user));
         } catch (IOException e) {
-            throw new RuntimeException("Failed to upload profile image: " + e.getMessage(), e);
+            throw new RuntimeException("Profile picture upload failed: " + e.getMessage(), e);
         }
+    }
+
+    @Override
+    public UserDTO updateUser(Long id, UserDTO userDTO) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.setUsername(userDTO.getUsername());
+        user.setEmail(userDTO.getEmail());
+        user.setUniversityName(userDTO.getUniversityName());
+        user.setUpdatedAt(LocalDateTime.now());
+
+        if (userDTO.getProfilePicture() != null && !userDTO.getProfilePicture().isEmpty()) {
+            try {
+                String newUrl = cloudinaryService.uploadProfileImage(userDTO.getProfilePicture());
+                user.setProfilePictureUrl(newUrl);
+            } catch (IOException e) {
+                throw new RuntimeException("Profile picture update failed", e);
+            }
+        }
+
+        return convertToDTO(userRepository.save(user));
     }
 
     @Override
     public UserDTO getUserById(Long id) {
         return userRepository.findById(id)
                 .map(this::convertToDTO)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
     @Override
@@ -59,48 +85,35 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO updateUser(Long id, UserDTO userDTO) {
-        User existingUser = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
-
-        existingUser.setUsername(userDTO.getUsername());
-        existingUser.setEmail(userDTO.getEmail());
-        existingUser.setUniversityName(userDTO.getUniveristyName());
-        existingUser.setUpdatedAt(LocalDateTime.now());
-
-        return convertToDTO(userRepository.save(existingUser));
-    }
-
-    @Override
     public void deleteUser(Long id) {
         if (!userRepository.existsById(id)) {
-            throw new RuntimeException("User not found with ID: " + id);
+            throw new RuntimeException("User not found");
         }
         userRepository.deleteById(id);
     }
 
-    private User convertToEntity(UserDTO dto, String imageUrl) {
-        return User.builder()
-                .id(dto.getId())
-                .username(dto.getUsername())
-                .password(passwordEncoder.encode(dto.getPassword()))
-                .Email(dto.getEmail())
-                .UniversityName(dto.getUniveristyName())
-                .profilePictureUrl(imageUrl)
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
+    private UserDTO convertToDTO(User user) {
+        UserDTO dto = new UserDTO();
+        dto.setId(user.getId());
+        dto.setUsername(user.getUsername());
+        dto.setEmail(user.getEmail());
+        dto.setUniversityName(user.getUniversityName());
+        dto.setProfilePictureUrl(user.getProfilePictureUrl());
+        dto.setCreatedAt(user.getCreatedAt());
+        dto.setUpdatedAt(user.getUpdatedAt());
+        return dto;
     }
 
-    private UserDTO convertToDTO(User user) {
-        return UserDTO.builder()
-                .id(user.getId())
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .universityName(user.getUniversityName())
-                .profilePictureUrl(user.getProfilePictureUrl())
-                .createdAt(user.getCreatedAt())
-                .updatedAt(user.getUpdatedAt())
-                .build();
+    private User convertToEntity(UserDTO dto) {
+        User user = new User();
+        user.setId(dto.getId());
+        user.setUsername(dto.getUsername());
+        user.setPassword(dto.getPassword());
+        user.setEmail(dto.getEmail());
+        user.setUniversityName(dto.getUniversityName());
+        user.setProfilePictureUrl(dto.getProfilePictureUrl());
+        user.setCreatedAt(dto.getCreatedAt());
+        user.setUpdatedAt(dto.getUpdatedAt());
+        return user;
     }
 }
