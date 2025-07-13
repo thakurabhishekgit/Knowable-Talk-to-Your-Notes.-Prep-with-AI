@@ -26,7 +26,7 @@ public class User {
     private String username;
 
     @NotBlank(message = "Password is required")
-
+    @Column(nullable = false)
     private String password;
 
     @Email

@@ -12,6 +12,8 @@ import org.springframework.http.MediaType;
 
 import jakarta.validation.Valid;
 import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/api/users")
@@ -29,13 +31,12 @@ public class UserController {
         return ResponseEntity.ok(createdUser);
     }
 
-    // ✅ Upload profile picture separately
     @PostMapping(value = "/uploadProfilePicture/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<UserDTO> uploadProfilePicture(
             @PathVariable Long id,
-            @RequestPart("profilePicture") MultipartFile profilePicture) {
-
-        UserDTO updatedUser = userService.updateProfilePicture(id, profilePicture);
+            @RequestPart("profilePicture") MultipartFile file) {
+        System.out.println(">>> Received file: " + file.getOriginalFilename());
+        UserDTO updatedUser = userService.updateProfilePicture(id, file);
         return ResponseEntity.ok(updatedUser);
     }
 
@@ -65,6 +66,14 @@ public class UserController {
     @DeleteMapping("/deleteUser/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
+    }
+
+    // ✅ Login user
+    @PostMapping("/login")
+    public ResponseEntity<UserDTO> loginUser(
+            @RequestBody UserDTO userDTO) {
+        UserDTO user = userService.LoginUser(userDTO);
+        return ResponseEntity.ok(user);
     }
 }

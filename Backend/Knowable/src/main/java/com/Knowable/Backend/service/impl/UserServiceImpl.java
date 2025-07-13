@@ -4,6 +4,7 @@ import com.Knowable.Backend.Model.User;
 import com.Knowable.Backend.dto.UserDTO;
 import com.Knowable.Backend.repository.UserRepository;
 import com.Knowable.Backend.service.CloudinaryService;
+import com.Knowable.Backend.service.FileUploadService;
 import com.Knowable.Backend.service.UserService;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,8 +33,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO createUser(UserDTO userDTO, MultipartFile profilePicture) {
-        String imageUrl = null;
 
+        if (userRepository.findByEmail(userDTO.getEmail()) != null) {
+            throw new RuntimeException("Email already exists");
+        }
+
+        String imageUrl = null;
         if (profilePicture != null && !profilePicture.isEmpty()) {
             try {
                 imageUrl = cloudinaryService.uploadProfileImage(profilePicture);
@@ -43,7 +48,7 @@ public class UserServiceImpl implements UserService {
         }
 
         User user = convertToEntity(userDTO);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setProfilePictureUrl(imageUrl);
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdatedAt(LocalDateTime.now());
@@ -113,6 +118,7 @@ public class UserServiceImpl implements UserService {
         dto.setProfilePictureUrl(user.getProfilePictureUrl());
         dto.setCreatedAt(user.getCreatedAt());
         dto.setUpdatedAt(user.getUpdatedAt());
+        dto.setPassword(user.getPassword()); // ✅ Add this line
         return dto;
     }
 
@@ -130,11 +136,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+
     public UserDTO LoginUser(UserDTO userDTO) {
-        User user = userRepository.findByEmail(userDTO.getEmail()); // ✅ Correct null check
-        if (user == null || !passwordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid email or password " + userDTO.getEmail() + " " + userDTO.getPassword());
+        User user = userRepository.findByEmail(userDTO.getEmail());
+
+        if (user == null) {
+            throw new RuntimeException("User not found with email: " + userDTO.getEmail());
         }
+
+        if (!passwordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
+            throw new RuntimeException("Incorrect password");
+        }
+
         return convertToDTO(user);
     }
+
 }
