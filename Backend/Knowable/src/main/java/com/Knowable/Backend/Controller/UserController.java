@@ -2,6 +2,7 @@ package com.Knowable.Backend.Controller;
 
 import com.Knowable.Backend.config.JWT.JwtUtil;
 import com.Knowable.Backend.dto.UserDTO;
+import com.Knowable.Backend.payload.TokenWithUserRequest;
 import com.Knowable.Backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 
@@ -14,8 +15,6 @@ import org.springframework.http.MediaType;
 
 import jakarta.validation.Valid;
 import java.util.List;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/api/users")
@@ -27,11 +26,13 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/registerUser")
-    public ResponseEntity<UserDTO> registerUser(@Valid @RequestBody UserDTO userDTO) {
+    public ResponseEntity<TokenWithUserRequest> registerUser(@Valid @RequestBody UserDTO userDTO) {
         UserDTO createdUser = userService.createUser(userDTO, null);
+
         String token = JwtUtil.generateToken(createdUser.getEmail());
-        createdUser.setToken(token);
-        return new ResponseEntity<>(createdUser, token != null ? HttpStatus.CREATED : HttpStatus.OK);
+        TokenWithUserRequest tokenWithUserRequest = new TokenWithUserRequest(createdUser, token);
+
+        return ResponseEntity.ok(tokenWithUserRequest);
     }
 
     @PostMapping(value = "/uploadProfilePicture/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -39,6 +40,14 @@ public class UserController {
             @PathVariable Long id,
             @RequestPart("profilePicture") MultipartFile file) {
         System.out.println(">>> Received file: " + file.getOriginalFilename());
+        UserDTO updatedUser = userService.updateProfilePicture(id, file);
+        return ResponseEntity.ok(updatedUser);
+    }
+
+    @PatchMapping("/updateProfilePicture/{id}")
+    public ResponseEntity<UserDTO> updateProfilePicture(
+            @PathVariable Long id,
+            @RequestPart("profilePicture") MultipartFile file) {
         UserDTO updatedUser = userService.updateProfilePicture(id, file);
         return ResponseEntity.ok(updatedUser);
     }
@@ -69,12 +78,15 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserDTO> loginUser(
+    public ResponseEntity<TokenWithUserRequest> loginUser(
             @RequestBody UserDTO userDTO) {
         UserDTO user = userService.LoginUser(userDTO);
-        user.setToken(null);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
         String token = JwtUtil.generateToken(user.getEmail());
-        user.setToken(token);
-        return new ResponseEntity<>(user, token != null ? HttpStatus.OK : HttpStatus.UNAUTHORIZED);
+        TokenWithUserRequest tokenWithUserRequest = new TokenWithUserRequest(user, token);
+
+        return ResponseEntity.ok(tokenWithUserRequest);
     }
 }

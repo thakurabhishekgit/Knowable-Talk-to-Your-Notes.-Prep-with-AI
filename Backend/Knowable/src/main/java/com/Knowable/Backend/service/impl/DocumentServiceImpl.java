@@ -95,12 +95,11 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    @Transactional
-    public List<Document> getAllDocumentsByWorkspace(Long workspaceId) {
-        if (!workspaceRepository.existsById(workspaceId)) {
-            throw new RuntimeException("Workspace not found");
-        }
-        return documentRepository.findAllByWorkspaceId(workspaceId);
+    @Transactional(readOnly = true)
+    public List<Document> getDocumentsByWorkspace(Long workspaceId) {
+        Workspace workspace = workspaceRepository.findById(workspaceId)
+                .orElseThrow(() -> new RuntimeException("Workspace not found"));
+        return documentRepository.findAllByWorkspace(workspace);
     }
 
 }

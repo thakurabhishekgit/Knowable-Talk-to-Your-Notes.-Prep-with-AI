@@ -27,8 +27,6 @@ public class User {
     @Size(min = 5, max = 20, message = "Name must be between 5 to 20 characters")
     private String username;
 
-    @NotBlank(message = "Password is required")
-    @Column(nullable = false)
     private String password;
 
     @Email

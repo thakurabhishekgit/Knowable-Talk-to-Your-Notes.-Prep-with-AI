@@ -51,7 +51,7 @@ public class DocumentController {
 
     @GetMapping("/workspace/{workspaceId}/documents")
     public ResponseEntity<List<Document>> getDocumentsByWorkspace(@PathVariable Long workspaceId) {
-        List<Document> documents = (List<Document>) documentService.getAllDocumentsByWorkspace(workspaceId);
+        List<Document> documents = (List<Document>) documentService.getDocumentsByWorkspace(workspaceId);
         return ResponseEntity.ok(documents);
     }
 

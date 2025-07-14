@@ -32,7 +32,7 @@ public class Workspace {
     private Long id;
 
     @NotBlank(message = "workshop name is required")
-    @Size(min = 2, max = 20, message = "workshop name must ne between 5 to 30")
+    @Size(min = 2, max = 50, message = "workshop name must ne between 5 to 30")
     @NotNull
     private String name;
 

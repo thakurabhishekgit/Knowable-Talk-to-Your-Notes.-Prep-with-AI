@@ -120,6 +120,7 @@ public class UserServiceImpl implements UserService {
         dto.setProfilePictureUrl(user.getProfilePictureUrl());
         dto.setCreatedAt(user.getCreatedAt());
         dto.setUpdatedAt(user.getUpdatedAt());
+        dto.setPassword(user.getPassword()); // Include password for login
 
         if (user.getWorkspaces() != null) {
             List<WorkspaceDTO> workspaceDTOs = user.getWorkspaces().stream().map(ws -> {

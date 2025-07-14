@@ -55,4 +55,11 @@ public class WorkspaceServiceImpl implements WorkspaceService {
     public List<Workspace> getWorkspacesByUser(Long userId) {
         return workspaceRepository.findAllByUserId(userId);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Workspace getWorkspaceById(Long workspaceId) {
+        return workspaceRepository.findById(workspaceId)
+                .orElseThrow(() -> new RuntimeException("Workspace not found"));
+    }
 }

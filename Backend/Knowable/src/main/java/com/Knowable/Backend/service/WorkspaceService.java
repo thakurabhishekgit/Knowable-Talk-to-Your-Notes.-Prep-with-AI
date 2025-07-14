@@ -11,4 +11,6 @@ public interface WorkspaceService {
     void deleteWorkspace(Long userId, Long workspaceId);
 
     List<Workspace> getWorkspacesByUser(Long userId);
+
+    Workspace getWorkspaceById(Long workspaceId);
 }

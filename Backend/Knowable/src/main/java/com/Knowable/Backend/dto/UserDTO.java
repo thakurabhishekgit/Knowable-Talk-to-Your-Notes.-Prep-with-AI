@@ -21,8 +21,6 @@ public class UserDTO {
     @Size(min = 5, max = 20, message = "Name must be between 5 to 20 characters")
     private String username;
 
-    @NotBlank(message = "Password is required")
-    @NotNull
     private String password;
 
     @Email
@@ -38,7 +36,5 @@ public class UserDTO {
     private LocalDateTime updatedAt;
 
     private List<WorkspaceDTO> workspaces; // Replace workspaceIds
-
-    private String token;
 
 }

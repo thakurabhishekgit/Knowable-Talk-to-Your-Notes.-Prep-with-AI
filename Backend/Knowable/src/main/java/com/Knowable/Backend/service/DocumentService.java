@@ -12,5 +12,5 @@ public interface DocumentService {
 
     void deleteDocument(Long documentId);
 
-    List<Document> getAllDocumentsByWorkspace(Long workspaceId);
+    List<Document> getDocumentsByWorkspace(Long workspaceId);
 }

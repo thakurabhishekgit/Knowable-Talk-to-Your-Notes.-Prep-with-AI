@@ -1,0 +1,891 @@
+
+http://localhost:2000 - Generated server url
+user-controller
+
+
+PUT
+/api/users/updateUser/{id}
+
+Parameters
+Try it out
+Reset
+Name	Description
+id *
+integer($int64)
+(path)
+id
+Request body
+
+application/json
+Example Value
+Schema
+{
+  "id": 0,
+  "username": "string",
+  "password": "string",
+  "email": "string",
+  "profilePicture": "string",
+  "profilePictureUrl": "string",
+  "universityName": "string",
+  "createdAt": "2025-07-14T09:13:36.011Z",
+  "updatedAt": "2025-07-14T09:13:36.011Z",
+  "workspaces": [
+    {
+      "id": 0,
+      "name": "string",
+      "description": "string",
+      "createdAt": "2025-07-14T09:13:36.011Z"
+    }
+  ],
+  "token": "string"
+}
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+*/*
+Controls Accept header.
+Example Value
+Schema
+{
+  "id": 0,
+  "username": "string",
+  "password": "string",
+  "email": "string",
+  "profilePicture": "string",
+  "profilePictureUrl": "string",
+  "universityName": "string",
+  "createdAt": "2025-07-14T09:15:29.210Z",
+  "updatedAt": "2025-07-14T09:15:29.210Z",
+  "workspaces": [
+    {
+      "id": 0,
+      "name": "string",
+      "description": "string",
+      "createdAt": "2025-07-14T09:15:29.210Z"
+    }
+  ],
+  "token": "string"
+}
+No links
+
+POST
+/api/users/uploadProfilePicture/{id}
+
+Parameters
+Try it out
+Name	Description
+id *
+integer($int64)
+(path)
+id
+Request body
+
+multipart/form-data
+profilePicture *
+string($binary)
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+*/*
+Controls Accept header.
+Example Value
+Schema
+{
+  "id": 0,
+  "username": "string",
+  "password": "string",
+  "email": "string",
+  "profilePicture": "string",
+  "profilePictureUrl": "string",
+  "universityName": "string",
+  "createdAt": "2025-07-14T09:15:29.213Z",
+  "updatedAt": "2025-07-14T09:15:29.213Z",
+  "workspaces": [
+    {
+      "id": 0,
+      "name": "string",
+      "description": "string",
+      "createdAt": "2025-07-14T09:15:29.213Z"
+    }
+  ],
+  "token": "string"
+}
+No links
+
+POST
+/api/users/registerUser
+
+Parameters
+Try it out
+No parameters
+
+Request body
+
+application/json
+Example Value
+Schema
+{
+  "id": 0,
+  "username": "string",
+  "password": "string",
+  "email": "string",
+  "profilePicture": "string",
+  "profilePictureUrl": "string",
+  "universityName": "string",
+  "createdAt": "2025-07-14T09:15:29.215Z",
+  "updatedAt": "2025-07-14T09:15:29.215Z",
+  "workspaces": [
+    {
+      "id": 0,
+      "name": "string",
+      "description": "string",
+      "createdAt": "2025-07-14T09:15:29.215Z"
+    }
+  ],
+  "token": "string"
+}
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+*/*
+Controls Accept header.
+Example Value
+Schema
+{
+  "id": 0,
+  "username": "string",
+  "password": "string",
+  "email": "string",
+  "profilePicture": "string",
+  "profilePictureUrl": "string",
+  "universityName": "string",
+  "createdAt": "2025-07-14T09:15:29.216Z",
+  "updatedAt": "2025-07-14T09:15:29.216Z",
+  "workspaces": [
+    {
+      "id": 0,
+      "name": "string",
+      "description": "string",
+      "createdAt": "2025-07-14T09:15:29.216Z"
+    }
+  ],
+  "token": "string"
+}
+No links
+
+POST
+/api/users/login
+
+Parameters
+Try it out
+No parameters
+
+Request body
+
+application/json
+Example Value
+Schema
+{
+  "id": 0,
+  "username": "string",
+  "password": "string",
+  "email": "string",
+  "profilePicture": "string",
+  "profilePictureUrl": "string",
+  "universityName": "string",
+  "createdAt": "2025-07-14T09:15:29.217Z",
+  "updatedAt": "2025-07-14T09:15:29.217Z",
+  "workspaces": [
+    {
+      "id": 0,
+      "name": "string",
+      "description": "string",
+      "createdAt": "2025-07-14T09:15:29.217Z"
+    }
+  ],
+  "token": "string"
+}
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+*/*
+Controls Accept header.
+Example Value
+Schema
+{
+  "id": 0,
+  "username": "string",
+  "password": "string",
+  "email": "string",
+  "profilePicture": "string",
+  "profilePictureUrl": "string",
+  "universityName": "string",
+  "createdAt": "2025-07-14T09:15:29.218Z",
+  "updatedAt": "2025-07-14T09:15:29.218Z",
+  "workspaces": [
+    {
+      "id": 0,
+      "name": "string",
+      "description": "string",
+      "createdAt": "2025-07-14T09:15:29.218Z"
+    }
+  ],
+  "token": "string"
+}
+No links
+
+GET
+/api/users/getUser/{id}
+
+Parameters
+Try it out
+Name	Description
+id *
+integer($int64)
+(path)
+id
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+*/*
+Controls Accept header.
+Example Value
+Schema
+{
+  "id": 0,
+  "username": "string",
+  "password": "string",
+  "email": "string",
+  "profilePicture": "string",
+  "profilePictureUrl": "string",
+  "universityName": "string",
+  "createdAt": "2025-07-14T09:15:29.220Z",
+  "updatedAt": "2025-07-14T09:15:29.220Z",
+  "workspaces": [
+    {
+      "id": 0,
+      "name": "string",
+      "description": "string",
+      "createdAt": "2025-07-14T09:15:29.220Z"
+    }
+  ],
+  "token": "string"
+}
+No links
+
+GET
+/api/users/getAllUsers
+
+Parameters
+Try it out
+No parameters
+
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+*/*
+Controls Accept header.
+Example Value
+Schema
+[
+  {
+    "id": 0,
+    "username": "string",
+    "password": "string",
+    "email": "string",
+    "profilePicture": "string",
+    "profilePictureUrl": "string",
+    "universityName": "string",
+    "createdAt": "2025-07-14T09:15:29.222Z",
+    "updatedAt": "2025-07-14T09:15:29.222Z",
+    "workspaces": [
+      {
+        "id": 0,
+        "name": "string",
+        "description": "string",
+        "createdAt": "2025-07-14T09:15:29.222Z"
+      }
+    ],
+    "token": "string"
+  }
+]
+No links
+
+DELETE
+/api/users/deleteUser/{id}
+
+Parameters
+Try it out
+Name	Description
+id *
+integer($int64)
+(path)
+id
+Responses
+Code	Description	Links
+200	
+OK
+
+No links
+workspace-controller
+
+
+GET
+/api/workspace/user/{userId}
+
+Parameters
+Try it out
+Name	Description
+userId *
+integer($int64)
+(path)
+userId
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+*/*
+Controls Accept header.
+Example Value
+Schema
+[
+  {
+    "id": 0,
+    "name": "string",
+    "description": "string",
+    "createdAt": "2025-07-14T09:15:29.224Z"
+  }
+]
+No links
+
+POST
+/api/workspace/user/{userId}
+
+Parameters
+Try it out
+Name	Description
+userId *
+integer($int64)
+(path)
+userId
+Request body
+
+application/json
+Example Value
+Schema
+{
+  "id": 0,
+  "name": "string",
+  "description": "string",
+  "createdAt": "2025-07-14T09:15:29.226Z"
+}
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+*/*
+Controls Accept header.
+Example Value
+Schema
+{
+  "id": 0,
+  "name": "string",
+  "description": "string",
+  "createdAt": "2025-07-14T09:15:29.226Z"
+}
+No links
+
+DELETE
+/api/workspace/user/{userId}/workspace/{workspaceId}
+
+Parameters
+Try it out
+Name	Description
+userId *
+integer($int64)
+(path)
+userId
+workspaceId *
+integer($int64)
+(path)
+workspaceId
+Responses
+Code	Description	Links
+200	
+OK
+
+No links
+file-upload-controller
+
+
+POST
+/api/upload
+
+Parameters
+Try it out
+No parameters
+
+Request body
+
+application/json
+Example Value
+Schema
+{
+  "file": "string"
+}
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+*/*
+Controls Accept header.
+Example Value
+Schema
+{}
+No links
+question-session-controller
+
+
+POST
+/api/questions/document/{documentId}
+
+Parameters
+Try it out
+Name	Description
+documentId *
+integer($int64)
+(path)
+documentId
+Request body
+
+application/json
+Example Value
+Schema
+{
+  "question": "string",
+  "answer": "string",
+  "createdAt": "2025-07-14T09:15:29.230Z"
+}
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+*/*
+Controls Accept header.
+Example Value
+Schema
+{
+  "id": 0,
+  "question": "string",
+  "answer": "string",
+  "createdAt": "2025-07-14T09:15:29.230Z"
+}
+No links
+
+GET
+/api/questions/getDocumentQuestions/{documentId}
+
+Parameters
+Try it out
+Name	Description
+documentId *
+integer($int64)
+(path)
+documentId
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+*/*
+Controls Accept header.
+Example Value
+Schema
+[
+  {
+    "id": 0,
+    "question": "string",
+    "answer": "string",
+    "createdAt": "2025-07-14T09:15:29.231Z"
+  }
+]
+No links
+previous-year-paper-controller
+
+
+POST
+/api/previous-papers/upload/{documentId}
+
+Parameters
+Try it out
+Name	Description
+documentId *
+integer($int64)
+(path)
+documentId
+subjectName *
+string
+(query)
+subjectName
+Request body
+
+application/json
+Example Value
+Schema
+{
+  "file": "string"
+}
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+*/*
+Controls Accept header.
+Example Value
+Schema
+{
+  "id": 0,
+  "subjectName": "string",
+  "fileUrl": "string",
+  "textExtracted": "string",
+  "uploadedAt": "2025-07-14T09:15:29.233Z"
+}
+No links
+
+GET
+/api/previous-papers/document/{documentId}
+
+Parameters
+Try it out
+Name	Description
+documentId *
+integer($int64)
+(path)
+documentId
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+*/*
+Controls Accept header.
+Example Value
+Schema
+[
+  {
+    "id": 0,
+    "subjectName": "string",
+    "fileUrl": "string",
+    "textExtracted": "string",
+    "uploadedAt": "2025-07-14T09:15:29.234Z"
+  }
+]
+No links
+document-controller
+
+
+POST
+/api/documents/workspace/{workspaceId}
+
+Parameters
+Try it out
+Name	Description
+workspaceId *
+integer($int64)
+(path)
+workspaceId
+Request body
+
+application/json
+Example Value
+Schema
+{
+  "file": "string",
+  "title": "string"
+}
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+*/*
+Controls Accept header.
+Example Value
+Schema
+{
+  "id": 0,
+  "title": "string",
+  "fileType": "string",
+  "fileUrl": "string",
+  "textExtracted": "string",
+  "uploadedAt": "2025-07-14T09:15:29.237Z",
+  "workspace": {
+    "id": 0,
+    "name": "string",
+    "description": "string",
+    "createdAt": "2025-07-14T09:15:29.237Z"
+  },
+  "questionSessions": [
+    {
+      "id": 0,
+      "question": "string",
+      "answer": "string",
+      "createdAt": "2025-07-14T09:15:29.237Z"
+    }
+  ],
+  "previousYearPapers": [
+    {
+      "id": 0,
+      "subjectName": "string",
+      "fileUrl": "string",
+      "textExtracted": "string",
+      "uploadedAt": "2025-07-14T09:15:29.237Z"
+    }
+  ]
+}
+No links
+
+GET
+/api/documents/workspace/{workspaceId}/documents
+
+Parameters
+Try it out
+Name	Description
+workspaceId *
+integer($int64)
+(path)
+workspaceId
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+*/*
+Controls Accept header.
+Example Value
+Schema
+[
+  {
+    "id": 0,
+    "title": "string",
+    "fileType": "string",
+    "fileUrl": "string",
+    "textExtracted": "string",
+    "uploadedAt": "2025-07-14T09:15:29.239Z",
+    "workspace": {
+      "id": 0,
+      "name": "string",
+      "description": "string",
+      "createdAt": "2025-07-14T09:15:29.239Z"
+    },
+    "questionSessions": [
+      {
+        "id": 0,
+        "question": "string",
+        "answer": "string",
+        "createdAt": "2025-07-14T09:15:29.239Z"
+      }
+    ],
+    "previousYearPapers": [
+      {
+        "id": 0,
+        "subjectName": "string",
+        "fileUrl": "string",
+        "textExtracted": "string",
+        "uploadedAt": "2025-07-14T09:15:29.239Z"
+      }
+    ]
+  }
+]
+No links
+
+GET
+/api/documents/workspace/{workspaceId}/document/{documentId}
+
+Parameters
+Try it out
+Name	Description
+workspaceId *
+integer($int64)
+(path)
+workspaceId
+documentId *
+integer($int64)
+(path)
+documentId
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+*/*
+Controls Accept header.
+Example Value
+Schema
+{
+  "id": 0,
+  "title": "string",
+  "fileType": "string",
+  "fileUrl": "string",
+  "textExtracted": "string",
+  "uploadedAt": "2025-07-14T09:15:29.241Z",
+  "workspace": {
+    "id": 0,
+    "name": "string",
+    "description": "string",
+    "createdAt": "2025-07-14T09:15:29.241Z"
+  },
+  "questionSessions": [
+    {
+      "id": 0,
+      "question": "string",
+      "answer": "string",
+      "createdAt": "2025-07-14T09:15:29.241Z"
+    }
+  ],
+  "previousYearPapers": [
+    {
+      "id": 0,
+      "subjectName": "string",
+      "fileUrl": "string",
+      "textExtracted": "string",
+      "uploadedAt": "2025-07-14T09:15:29.241Z"
+    }
+  ]
+}
+No links
+
+DELETE
+/api/documents/{documentId}
+
+Parameters
+Try it out
+Name	Description
+documentId *
+integer($int64)
+(path)
+documentId
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+*/*
+Controls Accept header.
+Example Value
+Schema
+string
+No links
+tikka-test-controller
+
+
+GET
+/api/documents/extract
+
+
+Schemas
+UserDTO{
+id	[...]
+username*	[...]
+password*	[...]
+email	[...]
+profilePicture	[...]
+profilePictureUrl	[...]
+universityName*	[...]
+createdAt	[...]
+updatedAt	[...]
+workspaces	[...]
+token	[...]
+}
+WorkspaceDTO{
+id	[...]
+name	[...]
+description	[...]
+createdAt	[...]
+}
+Workspace{
+id	integer($int64)
+name*	[...]
+description*	[...]
+createdAt	[...]
+}
+QuestionSessionDTO{
+question	[...]
+answer	[...]
+createdAt	[...]
+}
+QuestionSession{
+id	[...]
+question	[...]
+answer	[...]
+createdAt	[...]
+}
+PreviousYearPaper{
+id	[...]
+subjectName	[...]
+fileUrl	[...]
+textExtracted	[...]
+uploadedAt	[...]
+}
+Document{
+id	[...]
+title*	[...]
+fileType	[...]
+fileUrl	[...]
+textExtracted	[...]
+uploadedAt	[...]
+workspace	Workspace{...}
+questionSessions	[...]
+previousYearPapers	[...]
+}
