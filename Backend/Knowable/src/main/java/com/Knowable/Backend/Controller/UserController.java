@@ -26,12 +26,11 @@ public class UserController {
 
     private final UserService userService;
 
-    // ✅ Register user (JSON only)
     @PostMapping("/registerUser")
     public ResponseEntity<UserDTO> registerUser(@Valid @RequestBody UserDTO userDTO) {
-        UserDTO createdUser = userService.createUser(userDTO, null); // No image here
+        UserDTO createdUser = userService.createUser(userDTO, null);
         String token = JwtUtil.generateToken(createdUser.getEmail());
-        createdUser.setToken(token); // Set the token in the UserDTO
+        createdUser.setToken(token);
         return new ResponseEntity<>(createdUser, token != null ? HttpStatus.CREATED : HttpStatus.OK);
     }
 
@@ -44,7 +43,6 @@ public class UserController {
         return ResponseEntity.ok(updatedUser);
     }
 
-    // ✅ Update user (without handling profile picture)
     @PutMapping("/updateUser/{id}")
     public ResponseEntity<UserDTO> updateUser(
             @PathVariable Long id,
@@ -54,33 +52,29 @@ public class UserController {
         return ResponseEntity.ok(updatedUser);
     }
 
-    // ✅ Get user by ID
     @GetMapping("/getUser/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
-    // ✅ Get all users
     @GetMapping("/getAllUsers")
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    // ✅ Delete user
     @DeleteMapping("/deleteUser/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return ResponseEntity.ok().build();
     }
 
-    // ✅ Login user
     @PostMapping("/login")
     public ResponseEntity<UserDTO> loginUser(
             @RequestBody UserDTO userDTO) {
         UserDTO user = userService.LoginUser(userDTO);
-        user.setToken(null); // Clear token in DTO before generating a new one
+        user.setToken(null);
         String token = JwtUtil.generateToken(user.getEmail());
-        user.setToken(token); // Set the new token in the DTO
+        user.setToken(token);
         return new ResponseEntity<>(user, token != null ? HttpStatus.OK : HttpStatus.UNAUTHORIZED);
     }
 }

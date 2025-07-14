@@ -32,7 +32,7 @@ public class Document {
 
     @ManyToOne
     @JoinColumn(name = "workspace_id")
-    @JsonIgnore
+
     private Workspace workspace;
 
     @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)

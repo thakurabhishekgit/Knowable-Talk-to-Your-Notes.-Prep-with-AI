@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class DocumentServiceImpl implements DocumentService {
@@ -95,11 +96,11 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     @Transactional
-    public Iterable<Document> getAllDocumentsByWorkspace(Long workspaceId) {
-        Workspace workspace = workspaceRepository.findById(workspaceId)
-                .orElseThrow(() -> new RuntimeException("Workspace not found"));
-
-        return documentRepository.findByWorkspace(workspace);
+    public List<Document> getAllDocumentsByWorkspace(Long workspaceId) {
+        if (!workspaceRepository.existsById(workspaceId)) {
+            throw new RuntimeException("Workspace not found");
+        }
+        return documentRepository.findAllByWorkspaceId(workspaceId);
     }
 
 }
