@@ -31,8 +31,9 @@ public class CloudinaryService {
                 file.getBytes(),
                 ObjectUtils.asMap(
                         "resource_type", "auto",
-                        "folder", "knowable_docs",
-                        "type", "upload"));
+                        "folder", "knowable",
+                        "type", "upload",
+                        "access_mode", "public"));
 
         return uploadResult.get("secure_url").toString(); // Return the Cloudinary URL
     }
