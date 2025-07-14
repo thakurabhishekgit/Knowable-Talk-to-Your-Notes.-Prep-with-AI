@@ -1,5 +1,6 @@
 package com.Knowable.Backend.Controller;
 
+import com.Knowable.Backend.config.JWT.JwtUtil;
 import com.Knowable.Backend.dto.UserDTO;
 import com.Knowable.Backend.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import jakarta.validation.Valid;
@@ -28,7 +30,9 @@ public class UserController {
     @PostMapping("/registerUser")
     public ResponseEntity<UserDTO> registerUser(@Valid @RequestBody UserDTO userDTO) {
         UserDTO createdUser = userService.createUser(userDTO, null); // No image here
-        return ResponseEntity.ok(createdUser);
+        String token = JwtUtil.generateToken(createdUser.getEmail());
+        createdUser.setToken(token); // Set the token in the UserDTO
+        return new ResponseEntity<>(createdUser, token != null ? HttpStatus.CREATED : HttpStatus.OK);
     }
 
     @PostMapping(value = "/uploadProfilePicture/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -74,6 +78,9 @@ public class UserController {
     public ResponseEntity<UserDTO> loginUser(
             @RequestBody UserDTO userDTO) {
         UserDTO user = userService.LoginUser(userDTO);
-        return ResponseEntity.ok(user);
+        user.setToken(null); // Clear token in DTO before generating a new one
+        String token = JwtUtil.generateToken(user.getEmail());
+        user.setToken(token); // Set the new token in the DTO
+        return new ResponseEntity<>(user, token != null ? HttpStatus.OK : HttpStatus.UNAUTHORIZED);
     }
 }
