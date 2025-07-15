@@ -24,7 +24,7 @@ public class User {
     private Long id;
 
     @NotBlank(message = "Username is required")
-    @Size(min = 5, max = 20, message = "Name must be between 5 to 20 characters")
+    @Size(min = 5, max = 50, message = "Name must be between 5 to 50 characters")
     private String username;
 
     private String password;
