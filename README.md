@@ -1,6 +1,6 @@
 # Knowable.AI - AI-Powered Academic Assistant
 
-**Live Application URL:** [https://knowable-f-git-1b459a-thakurabhisheksinght97-gmailcoms-projects.vercel.app/](https://knowable-f-git-1b459a-thakurabhisheksinght97-gmailcoms-projects.vercel.app/)
+**Live Application URL:** [https://knowable-ai.vercel.app/](https://knowable-f-git-1b459a-thakurabhisheksinght97-gmailcoms-projects.vercel.app/)
 
 ## 1. Problem Statement
 
