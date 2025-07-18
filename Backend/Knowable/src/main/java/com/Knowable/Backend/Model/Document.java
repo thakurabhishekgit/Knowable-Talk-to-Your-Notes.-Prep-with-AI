@@ -12,7 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Document {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
