@@ -3,6 +3,7 @@ package com.Knowable.Backend.service.impl;
 import com.Knowable.Backend.Model.Document;
 import com.Knowable.Backend.Model.Workspace;
 import com.Knowable.Backend.dto.DocumentDTO;
+import com.Knowable.Backend.dto.DocumentResponseDTO;
 import com.Knowable.Backend.repository.DocumentRepository;
 import com.Knowable.Backend.repository.WorkspaceRepository;
 import com.Knowable.Backend.service.CloudinaryService;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DocumentServiceImpl implements DocumentService {
@@ -96,10 +98,22 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Document> getDocumentsByWorkspace(Long workspaceId) {
-        Workspace workspace = workspaceRepository.findById(workspaceId)
-                .orElseThrow(() -> new RuntimeException("Workspace not found"));
-        return documentRepository.findAllByWorkspace(workspace);
+    public List<DocumentResponseDTO> getDocumentsByWorkspace(Long workspaceId) {
+        if (!workspaceRepository.existsById(workspaceId)) {
+            throw new RuntimeException("Workspace not found");
+        }
+
+        List<Document> documents = documentRepository.findAllByWorkspaceId(workspaceId);
+
+        return documents.stream()
+                .map(doc -> DocumentResponseDTO.builder()
+                        .id(doc.getId())
+                        .title(doc.getTitle())
+                        .fileType(doc.getFileType())
+                        .fileUrl(doc.getFileUrl())
+                        .uploadedAt(doc.getUploadedAt())
+                        .build())
+                .collect(Collectors.toList());
     }
 
 }

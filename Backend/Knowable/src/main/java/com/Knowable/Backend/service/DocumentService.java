@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.Knowable.Backend.Model.Document;
 import com.Knowable.Backend.dto.DocumentDTO;
+import com.Knowable.Backend.dto.DocumentResponseDTO;
 
 public interface DocumentService {
     Document createDocument(Long workspaceId, DocumentDTO documentDTO);
@@ -12,5 +13,5 @@ public interface DocumentService {
 
     void deleteDocument(Long documentId);
 
-    List<Document> getDocumentsByWorkspace(Long workspaceId);
+    List<DocumentResponseDTO> getDocumentsByWorkspace(Long workspaceId);
 }

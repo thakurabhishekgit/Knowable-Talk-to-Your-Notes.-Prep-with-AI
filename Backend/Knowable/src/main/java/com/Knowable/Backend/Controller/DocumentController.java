@@ -2,6 +2,7 @@ package com.Knowable.Backend.Controller;
 
 import com.Knowable.Backend.Model.Document;
 import com.Knowable.Backend.dto.DocumentDTO;
+import com.Knowable.Backend.dto.DocumentResponseDTO;
 import com.Knowable.Backend.service.DocumentService;
 
 import java.util.List;
@@ -50,8 +51,8 @@ public class DocumentController {
     }
 
     @GetMapping("/workspace/{workspaceId}/documents")
-    public ResponseEntity<List<Document>> getDocumentsByWorkspace(@PathVariable Long workspaceId) {
-        List<Document> documents = (List<Document>) documentService.getDocumentsByWorkspace(workspaceId);
+    public ResponseEntity<List<DocumentResponseDTO>> getDocumentsByWorkspace(@PathVariable Long workspaceId) {
+        List<DocumentResponseDTO> documents = documentService.getDocumentsByWorkspace(workspaceId);
         return ResponseEntity.ok(documents);
     }
 
