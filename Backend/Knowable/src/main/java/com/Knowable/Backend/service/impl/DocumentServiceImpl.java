@@ -9,6 +9,9 @@ import com.Knowable.Backend.repository.WorkspaceRepository;
 import com.Knowable.Backend.service.CloudinaryService;
 import com.Knowable.Backend.service.DocumentService;
 import com.Knowable.Backend.service.PdfExtractionService;
+
+import org.springframework.cache.annotation.Cacheable;
+
 import org.apache.tika.Tika;
 
 import org.springframework.stereotype.Service;
@@ -97,6 +100,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
+    @Cacheable(value = "documentsByWorkspace", key = "#workspaceId")
     @Transactional(readOnly = true)
     public List<DocumentResponseDTO> getDocumentsByWorkspace(Long workspaceId) {
         if (!workspaceRepository.existsById(workspaceId)) {
@@ -111,7 +115,7 @@ public class DocumentServiceImpl implements DocumentService {
                         .title(doc.getTitle())
                         .fileType(doc.getFileType())
                         .fileUrl(doc.getFileUrl())
-                        .uploadedAt(doc.getUploadedAt())
+
                         .build())
                 .collect(Collectors.toList());
     }

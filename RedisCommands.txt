@@ -1,0 +1,3 @@
+docker start redis  
+docker exec -it redis-server redis-cli
+JSON.GET "documentsByWorkspace::2"
