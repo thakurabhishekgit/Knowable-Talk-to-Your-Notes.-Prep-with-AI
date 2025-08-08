@@ -2,8 +2,6 @@
 import { toast } from "@/hooks/use-toast";
 
 const getApiUrl = () => {
-  // Use the environment variable for the production API URL.
-  // Fallback to the local backend URL for development.
   return "https://knowable-backend-latest.onrender.com"; 
 };
 const handleResponse = async (response) => {
@@ -12,7 +10,6 @@ const handleResponse = async (response) => {
         const text = await response.text();
         return text ? JSON.parse(text) : {};
     } catch (e) {
-        // The response was successful, but didn't have a JSON body.
         return {};
     }
   } else {
@@ -22,7 +19,6 @@ const handleResponse = async (response) => {
         const responseText = await response.text();
         if (responseText) {
             const errorData = JSON.parse(responseText);
-            // Safely extract a simple string message and avoid stringifying the whole object
             if (typeof errorData.message === 'string') {
                 errorMessage = errorData.message;
             } else if (typeof errorData.error === 'string') {
@@ -30,8 +26,7 @@ const handleResponse = async (response) => {
             }
         }
     } catch (e) {
-        // If parsing the error response fails, we'll stick with the default status text message.
-        // This is safer than trying to process a complex, non-JSON error.
+
         console.error("Could not parse API error response as JSON. Falling back to status text.");
     }
 
