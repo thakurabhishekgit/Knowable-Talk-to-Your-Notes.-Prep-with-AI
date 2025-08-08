@@ -174,7 +174,7 @@ const ResultsContent = () => {
                 toast({ variant: "destructive", title: "Generation Failed", description: e.message });
             } finally {
                 setIsLoading(false);
-                // It's safer to only remove the item if it was successfully used.
+
                 sessionStorage.removeItem('documentTextForTool');
             }
         };
